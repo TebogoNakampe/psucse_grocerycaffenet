@@ -14,12 +14,26 @@ Table of contents :
 Introduction
 ------------
 
-In this project, we used Caffe [1] which is a deep learning framework for convolutional neural network.
-We used AlexNet 
+In this project, we employ [Caffe](http://caffe.berkeleyvision.org/ "Caffe Homepage") [1] as a framework for convolutional neural network.
+Also, CaffeNet is used as a CNN model which is a replication of [AlexNet](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet") [2] with minor changes. 
+CaffeNet model is pre-trained model which experience 310,000 iterations.
+Using it as a starting point, we fine-tuned the model with 2014 [ImageNet](http://www.image-net.org/ "ImageNet dataset") dataset.
 
 Background
 ------------
 
+### Caffe
+
+Caffe is a framework for machine learning which is developed by Berkeley AI Research (BAIR).
+
+It has numerous implementation of general layers used in deep learning; like convolutional layer, normalization layer, pooling layer, relu layer, sigmoid layer, etc.
+Also, they provide several neural network models - AlexNet, GoogleNet, CaffeNet, etc. - 
+
+Caffe support CPU and GPU, thus user can choose what they want.  
+
+### AlexNet (CaffeNet)
+
+### ImageNet
 
 
 
@@ -55,6 +69,7 @@ Summary
 
 References
 ------------
-[1] [http://caffe.berkeleyvision.org/](http://caffe.berkeleyvision.org/ "Caffe Homepage")
+[1] [Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, Grevor Darrell, "Caffe: Convolutional Architecture for Fast Feature Embedding", arXiv preprint arXiv:1408.5093, 2014.](http://caffe.berkeleyvision.org/ "Caffe Homepage")
 
 [2] [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
+
