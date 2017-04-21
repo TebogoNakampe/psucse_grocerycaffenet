@@ -1,4 +1,5 @@
-PSU CSE586 Project2 [GroceryCaffeNet] - Jinhang Choi, Jihyun Ryoo
+PSU CSE586 Project2 [GroceryCaffeNet] |
+| - Jinhang Choi, Jihyun Ryoo
 ============
 
 This webpage is a report of CSE586 class, second project.
