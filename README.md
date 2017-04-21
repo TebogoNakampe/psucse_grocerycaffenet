@@ -27,11 +27,16 @@ Background
 Caffe is a framework for machine learning which is developed by Berkeley AI Research (BAIR).
 
 It has numerous implementation of general layers used in deep learning; like convolutional layer, normalization layer, pooling layer, relu layer, sigmoid layer, etc.
-Also, they provide several neural network models - AlexNet, GoogleNet, CaffeNet, etc. - 
+Using the layers, user can generate their own model.
+Or Caffe provides several neural network models - AlexNet, GoogleNet, CaffeNet, etc. - so user can choose one of them.
+In this project, we choosed CaffeNet.
 
-Caffe support CPU and GPU, thus user can choose what they want.  
+Caffe support CPU (C++) and GPU (CUDA), thus user can choose what they want.
 
-### AlexNet (CaffeNet)
+
+### AlexNet and CaffeNet
+
+
 
 ### ImageNet
 
