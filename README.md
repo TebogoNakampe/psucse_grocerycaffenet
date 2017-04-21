@@ -26,6 +26,28 @@ Background
 Fine-tuning of CaffeNet
 ------------
 
+|         | apple   | artichoke | bagel   | banana  | bell    | burrito | cucumber  |
+|:-------:|:-------:|:---------:|:-------:|:-------:|:-------:|:-------:|:---------:|
+| train   | 1081    | 809       | 586     | 733     | 633     | 560     | 492       |
+| val     | 140     | 95        | 87      | 88      | 68      | 84      | 77        |
+| total   | 1221    | 904       | 673     | 821     | 701     | 644     | 569       |
+
+|         | fig     | guacamole | hamburger | lemon   | milk    | mushroom | pineapple |
+|:-------:|:-------:|:---------:|:---------:|:-------:|:-------:|:--------:|:---------:|
+| train   | 475     | 651       | 555       | 662     | 501     | 671      | 530       |
+| val     | 53      | 90        | 72        | 86      | 73      | 75       | 64        |
+| total   | 528     | 741       | 627       | 748     | 574     | 746      | 594       |
+
+|         | pizza   | pomegranate | popsicle | pretzel | strawberry | water | wine  |
+|:-------:|:-------:|:-----------:|:--------:|:-------:|:----------:|:-----:|:-----:|
+| train   | 730     | 822         | 592      | 571     | 576        | 686   | 733   |
+| val     | 104     | 79          | 87       | 66      | 83         | 87    | 73    |
+| total   | 834     | 901         | 679      | 637     | 659        | 773   | 806   |
+
+
+![train_loss_trend](result/train_loss.png)
+![val_accuracy_trend](result/test_accuracy.png)
+
 Result
 ------------
 
