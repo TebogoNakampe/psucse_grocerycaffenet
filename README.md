@@ -38,15 +38,16 @@ Fine-tuning of CaffeNet
 | val     | 53      | 90        | 72        | 86      | 73      | 75       | 64        |
 | total   | 528     | 741       | 627       | 748     | 574     | 746      | 594       |
 
-|         | pizza   | pomegranate | popsicle | pretzel | strawberry | water | wine  |
-|:-------:|:-------:|:-----------:|:--------:|:-------:|:----------:|:-----:|:-----:|
-| train   | 730     | 822         | 592      | 571     | 576        | 686   | 733   |
-| val     | 104     | 79          | 87       | 66      | 83         | 87    | 73    |
-| total   | 834     | 901         | 679      | 637     | 659        | 773   | 806   |
+|         | pizza   | pomegranate | popsicle | pretzel | strawberry | water | wine  | summary |
+|:-------:|:-------:|:-----------:|:--------:|:-------:|:----------:|:-----:|:-----:|:-------:|
+| train   | 730     | 822         | 592      | 571     | 576        | 686   | 733   | 13649   |
+| val     | 104     | 79          | 87       | 66      | 83         | 87    | 73    | 1731    |
+| total   | 834     | 901         | 679      | 637     | 659        | 773   | 806   | 15380   |
 
-
-![train_loss_trend](result/train_loss.png)
-![val_accuracy_trend](result/test_accuracy.png)
+<div class="fig figcenter fighighlight">
+  <img src="result/train_loss.png" width="48%">
+  <img src="result/test_accuracy.png" width="48%" style="border-left: 1px solid black;">
+</div>
 
 Result
 ------------
