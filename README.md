@@ -17,7 +17,7 @@ Introduction
 In this project, we employ Caffe [[1](#caffe)] as a framework for convolutional neural network.
 Also, CaffeNet is used as a CNN model which is a replication of AlexNet [[2](#alexnet)] with minor changes. 
 CaffeNet model is pre-trained model which experience 310,000 iterations.
-Using it as a starting point, we fine-tuned the model with 2014 [ImageNet](http://www.image-net.org/ "ImageNet dataset") dataset.
+Using it as a starting point, we fine-tuned the model with 2014 ImageNet dataset [[3](#ilsvrc14)].
 
 Background
 ------------
