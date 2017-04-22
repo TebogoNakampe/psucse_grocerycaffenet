@@ -1,4 +1,4 @@
-PennState 2016FA CSE586 Project2: Simple GroceryCaffeNet <br/>- Jinhang Choi, Jihyun Ryoo
+PennState 2016FA CSE586 Project2: Fine-tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
 ============
 
 This webpage is a comprehensive report of the second project in CSE586 class.
@@ -15,8 +15,7 @@ Introduction
 ------------
 
 In this project, we employ Caffe [[1](#Jia14)] as a framework for convolutional neural network (CNN).
-Also, as a case study of fine-tuing, we bootstrap CaffeNet [[3](#BAIRCaffeNet)], which is a replication of AlexNet [[2](#Alex12)].
-Training GroceryCaffeNet is based on ILSVRC2014 dataset [[4](#ilsvrc14)].
+Also, as a case study of fine-tuing CNN, we bootstrap CaffeNet [[3](#BAIRCaffeNet)], which is a replication of AlexNet [[2](#Alex12)]. We call the fine-tuned model GroceryCaffeNet because it exploits CaffeNet's capability to identify some grocery items. Training GroceryCaffeNet is based on [ImageNet](http://image-net.org/) Dataset.
 
 Background
 ------------
@@ -43,7 +42,7 @@ Caffe support CPU (C++) and GPU (CUDA), thus user can choose what they want.
 
 Fine-tuning CaffeNet
 ------------
-For target data, we decided to use ILSVRC2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes our dataset in detail. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image.
+For target data, we decided to use ILSVRC2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of image counts in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image.
 
 |         | apple   | artichoke | bagel   | banana  | bell pepper | burrito | cucumber  | fig     | guacamole |
 |:-------:|:-------:|:---------:|:-------:|:-------:|:-----------:|:-------:|:---------:|:-------:|:--------:|
