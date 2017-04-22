@@ -14,8 +14,8 @@ Table of contents :
 Introduction
 ------------
 
-In this project, we employ Caffe [[1](#caffe)] as a framework for convolutional neural network.
-Also, CaffeNet is used as a CNN model which is a replication of AlexNet [[2](#alexnet)] with minor changes. 
+In this project, we employ Caffe [[1](#Jia14)] as a framework for convolutional neural network.
+Also, CaffeNet is used as a CNN model which is a replication of AlexNet [[2](#Alex12)] with minor changes. 
 CaffeNet model is pre-trained model which experience 310,000 iterations.
 Using it as a starting point, we fine-tuned the model with 2014 ImageNet dataset [[3](#ilsvrc14)].
 
@@ -82,10 +82,10 @@ Summary
 
 References
 ------------
-<a name='caffe'> </a>
+<a name='Jia14'> </a>
 [1] [Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, Grevor Darrell, "Caffe: Convolutional Architecture for Fast Feature Embedding", arXiv preprint arXiv:1408.5093, 2014.](http://caffe.berkeleyvision.org/ "Caffe Homepage")
 
-<a name='alexnet'> </a>
+<a name='Alex12'> </a>
 [2] [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
 
 <a name='ilsvrc14'> </a>
