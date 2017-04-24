@@ -77,7 +77,7 @@ Since there are 13,649 images in our training dataset, an epoch is roughly 110 i
 </div>
 
 
-A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<sup>[1](#f1)</sup>.
+A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<sup id='rfn1'>[1](#fn1)</sup>.
 
 Result
 ------------
@@ -90,22 +90,27 @@ In deployment, we compare ground truth to the inference result with a highest co
 <div class="fig figcenter fighighlight">
   <img src="result/result_top1.png">
   <div class="figcaption">
-    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated<sup>[2](#f2)</sup>. Nevertheless, mean average precision is near to 70%.
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated<sup id='rfn2'>[2](#fn2)</sup>. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
 
 
-Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup>[3](#f3)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
+Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup id='rfn3'>[3](#fn3)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
 
 Summary
 ------------
 [PSU CSE586 Course Project2] Fine-tuning AlexNet from Selected ILSVRC14 Dataset
 
-Footnotes
+
 ------------
-1. <a name='#f1'> </a> The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset. 
-2. <a name='#f2'> </a> For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly. 
-3. <a name='#f3'> </a> For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
+<a name='#fn1'> </a>
+[1.]((#rfn1)) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset.
+
+<a name='#fn2'> </a>
+[2.](#rfn2) For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly.
+
+<a name='#fn3'> </a>
+[3.](#rfn3) For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
 
 References
 ------------
