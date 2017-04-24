@@ -15,7 +15,7 @@ Introduction
 ------------
 
 In this project, we employ Caffe [[1](#Jia14)] as a framework for convolutional neural network (CNN).
-Also, as a case study of fine-tuing CNN, we bootstrap CaffeNet [[3](#BAIRCaffeNet)], which is a replication of AlexNet [[2](#Alex12)]. We call the fine-tuned model GroceryCaffeNet because it exploits CaffeNet's capability to identify some grocery items. Training GroceryCaffeNet is based on [ImageNet](http://image-net.org/) Dataset.
+Also, as a case study of fine-tuing CNN, we bootstrap CaffeNet [[2](#BAIRCaffeNet)], which is a replication of AlexNet [[3](#Alex12)]. We call the fine-tuned model GroceryCaffeNet because it exploits CaffeNet's capability to identify some grocery items. Training GroceryCaffeNet is based on [ImageNet](http://image-net.org/) Dataset.
 
 Background
 ------------
@@ -56,11 +56,11 @@ For target data, we decided to use ILSVRC2014 DET Dataset [[4](#ilsvrc14)] since
 | val     | 72        | 86      | 73        | 75       | 64        | 104     | 79          | 87       | 66      |
 | total   | 627       | 748     | 574       | 746      | 594       | 834     | 901         | 679      | 637     |
 
-|         | strawberry | water | wine  | summary |
-|:-------:|:----------:|:-----:|:-----:|:-------:|
-| train   | 576        | 686   | 733   | 13649   |
-| val     | 83         | 87    | 73    | 1731    |
-| total   | 659        | 773   | 806   | 15380   |
+|         | strawberry | water bottle | wine bottle | summary |
+|:-------:|:----------:|:------------:|:-----------:|:-------:|
+| train   | 576        | 686          | 733         | 13649   |
+| val     | 83         | 87           | 73          | 1731    |
+| total   | 659        | 773          | 806         | 15380   |
 
 As shown in the following CNN scheme, we directly borrowed layers of CaffeNet except softmax, which is composed of 21 classes. Even though reusing weights and biases in CaffeNet, however, we still need to refine the trained parameters for extracting features in some way. As a result, we did not eliminate learning rate of every layers, but fortify training the last fully connected layer [ten times](model/mdl_grocery_caffenet/train_val.prototxt#L364-L371) than other layers. Instead, the initial learning rate decreases to [0.001](model/mdl_grocery_caffenet/solver.prototxt#L4) so that GroceryCaffeNet can rely on the original CaffeNet's parameters. 
 
@@ -71,15 +71,29 @@ Since there are 13,649 images in our training dataset, an epoch is roughly 110 i
 <div class="fig figcenter fighighlight">
   <img src="result/train_loss.png" width="48%">
   <img src="result/test_accuracy.png" width="48%" style="border-left: 1px solid black;">
+  <div class="figcaption">
+    While training Grocery-CaffeNet progresses, we decrease learning rate by one-tenth for every 10K iterations, i.e. rougly 90 GPU epochs. There is no significant difference in both train loss (<b>left</b>) and test accuracy (<b>right</b>) after 30K iterations. Therefore, 30K iterations would be sufficient enough to fine-tune this CNN model.
+  </div>  
 </div>
 
-A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just 1 epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of loss penalty. From our experiments, 45,000 iterations are sufficient to probe the extent of available classification in the current setting. Our model may classify 21 grocery items in 76.2% accuracy. 
+A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<a title='The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset.'><sup>1</sup></a>.
 
 Result
 ------------
-Let's analyze 76.2% accuracy in more detail. To understand what happend to testing validation dataset, we deploy GroceryCaffeNet on classification [script](script/classify.py) per image. For your information, please refer to the following [log](result/classification.log).
+Let's analyze the top-1 classification accuracy in more detail. To understand what happend to test validation dataset, we deploy GroceryCaffeNet on [classification script](script/classify.py) per image. For your information, please refer to the following [log](result/classification.log).
 
 ![deploy-grocery-caffenet](result/deploy.png)
+
+In deployment, we compare ground truth to the inference result with a highest confidence score so that can figure out which features Grocery-CaffeNet really learns. The only difference in our CNN scheme is data layer to feed an image at a time (batch size 1).
+
+<div class="fig figcenter fighighlight">
+  <img src="result/result_top1.png">
+  <div class="figcaption">
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated<a title='for instance, object occlusion in an image'><sup>2</sup></a>. Nevertheless, mean average precision is near to 70%.
+  </div>
+</div>
+
+Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<a title='for instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle'><sup>3</sup></a>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
 
 Summary
 ------------
@@ -88,13 +102,19 @@ Summary
 References
 ------------
 <a name='Jia14'> </a>
-[1] [Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, Grevor Darrell, "Caffe: Convolutional Architecture for Fast Feature Embedding", arXiv preprint arXiv:1408.5093, 2014.](http://caffe.berkeleyvision.org/ "Caffe Homepage")
-
-<a name='Alex12'> </a>
-[2] [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
+[1] [Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, and Grevor Darrell, "Caffe: Convolutional Architecture for Fast Feature Embedding", arXiv preprint arXiv:1408.5093, 2014.](http://caffe.berkeleyvision.org/ "Caffe Homepage")
 
 <a name='BAIRCaffeNet'> </a>
-[3] [Berkeley AI Research (BAIR) CaffeNet Model](https://github.com/BVLC/caffe/tree/master/models/bvlc_reference_caffenet)
+[2] [Berkeley AI Research (BAIR) CaffeNet Model](https://github.com/BVLC/caffe/tree/master/models/bvlc_reference_caffenet)
+
+<a name='Alex12'> </a>
+[3] [Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
 
 <a name='ilsvrc14'> </a>
 [4] [Imagenet Large Scale Visual Recognition Challenge 2014 (ILSVRC2014) Dataset](http://image-net.org/challenges/LSVRC/2014/index#data)
+
+<a name='Szeg14'> </a>
+[5] [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich, "Going Deeper with Convolutions", arXiv preprint arXiv:1409.4842, 2014.](https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet)
+
+<a name='Kaiming15'> </a>
+[6] [Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun, "Deep Residual Learning for Image Recognition", arXiv preprint arXiv:1512.03385, 2015.](https://github.com/KaimingHe/deep-residual-networks)
