@@ -90,12 +90,12 @@ In deployment, we compare ground truth to the inference result with a highest co
 <div class="fig figcenter fighighlight">
   <img src="result/result_top1.png">
   <div class="figcaption">
-    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated<sup id='rfn2'>[2](#fn2)</sup>. Nevertheless, mean average precision is near to 70%.
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
 
 
-Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup id='rfn3'>[3](#fn3)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
+Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup id='rfn2'>[2](#fn2)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
 
 Summary
 ------------
@@ -103,14 +103,11 @@ Summary
 
 
 ------------
-<a name='#fn1'> </a>
-[1.]((#rfn1)) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset.
+<a name='fn1'> </a>
+[1.](#rfn1) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset.
 
-<a name='#fn2'> </a>
-[2.](#rfn2) For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly.
-
-<a name='#fn3'> </a>
-[3.](#rfn3) For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
+<a name='fn2'> </a>
+[2.](#rfn2) For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
 
 References
 ------------
