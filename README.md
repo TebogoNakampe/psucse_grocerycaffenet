@@ -1,3 +1,22 @@
+<style>
+  .figcenter {
+    text-align: center;
+  }
+  .fig img {
+    max-width: 98%;
+  }
+  .fighighlight {
+    padding: 20px 4px 20px 4px;
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #999;
+  }
+  .figcaption {
+    font-weight: 400;
+    font-size: 14px;
+    color: #575651;
+    text-align: justify;
+  }
+</style>
 PennState 2017SP CSE586 Project2: Fine-tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
 ============
 
@@ -87,7 +106,6 @@ As shown in the following CNN scheme, we directly borrowed layers of CaffeNet ex
 
 Since there are 13,649 images in our training dataset, an epoch is roughly 110 iterations in terms of batch size 125. We repeated testing validation dataset for every 110 iterations to understand a trend of top-1 classification accuracy while training continues. Testing itself takes 28 iterations with batch size 62.
 
-***
 <div class="fig figcenter fighighlight">
   <img src="result/train_loss.png" width="48%">
   <img src="result/test_accuracy.png" width="48%" style="border-left: 1px solid black;">
@@ -95,8 +113,6 @@ Since there are 13,649 images in our training dataset, an epoch is roughly 110 i
     While training Grocery-CaffeNet, we decrease learning rate by one-tenth for every 10K iterations, i.e. rougly 90 GPU epochs. There is no significant difference in both train loss (<b>left</b>) and test accuracy (<b>right</b>) after 30K iterations. Therefore, 30K iterations would be sufficient enough to fine-tune this CNN model.
   </div>  
 </div>
-
-***
 
 A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<sup id='rfn1'>[1](#fn1)</sup>.
 
@@ -108,7 +124,6 @@ Let's analyze the top-1 classification accuracy in more detail. To understand wh
 
 In deployment, we compare ground truth to the inference result with a highest confidence score so that can figure out which features Grocery-CaffeNet really learns. The only difference in our CNN scheme is data layer to feed an image at a time (batch size 1).
 
-***
 <div class="fig figcenter fighighlight">
   <img src="result/result_top1.png">
   <div class="figcaption">
@@ -116,7 +131,6 @@ In deployment, we compare ground truth to the inference result with a highest co
   </div>
 </div>
 
-***
 
 Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup id='rfn2'>[2](#fn2)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
 
