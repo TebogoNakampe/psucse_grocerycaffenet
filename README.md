@@ -112,7 +112,7 @@ In deployment, we compare ground truth to the inference result with a highest co
 <div class="fig figcenter fighighlight">
   <img src="result/result_top1.png">
   <div class="figcaption">
-    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keeps Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
 
@@ -130,7 +130,19 @@ Summary
 [1.](#rfn1) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC-2012 dataset.
 
 <a name='fn2'> </a>
-[2.](#rfn2) For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
+[2.](#rfn2) For instance, red apple versus pomegranate, bagel versus pretzel, and water bottle versus wine bottle have visually similar features. Here are some examples which you can compare:
+
+<div class="fig figcenter fighighlight">
+  <img src="data/ILSVRC2014_train_00031188.JPEG">
+  <img src="data/ILSVRC2014_train_00034821.JPEG">
+  <img src="data/ILSVRC2014_train_00052736.JPEG">
+  <img src="data/n07695742_7997.JPEG">
+  <img src="data/ILSVRC2014_train_00005172.JPEG">
+  <img src="data/ILSVRC2014_train_00005152.JPEG">
+  <div class="figcaption">
+    The order of ground truth among six images ranging from top-left to bottom-right is apple, pomegranate, bagel, pretzel, water bottle, and wine bottle.
+  </div>
+</div>
 
 References
 ------------
