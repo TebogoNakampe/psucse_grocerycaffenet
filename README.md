@@ -1,4 +1,4 @@
-PennState 2016FA CSE586 Project2: Fine-tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
+PennState 2017SP CSE586 Project2: Fine-tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
 ============
 
 This webpage is a comprehensive report of the second project in CSE586 class.
