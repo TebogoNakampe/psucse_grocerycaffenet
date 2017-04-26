@@ -125,9 +125,6 @@ References
 [3] [Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
 
 <a name='ilsvrc14'> </a>
-<<<<<<< HEAD
-[3] [ImageNet Large Scale Visual Recognition Challenge 2014 (ILSVRC2014) Dataset](http://image-net.org/challenges/LSVRC/2014/index#data)
-=======
 [4] [Imagenet Large Scale Visual Recognition Challenge 2014 (ILSVRC2014) Dataset](http://image-net.org/challenges/LSVRC/2014/index#data)
 
 <a name='Szeg14'> </a>
@@ -135,4 +132,3 @@ References
 
 <a name='Kaiming15'> </a>
 [6] [Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun, "Deep Residual Learning for Image Recognition", arXiv preprint arXiv:1512.03385, 2015.](https://github.com/KaimingHe/deep-residual-networks)
->>>>>>> origin/master
