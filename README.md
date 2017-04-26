@@ -34,15 +34,34 @@ Caffe support CPU (C++) and GPU (CUDA), thus user can choose what they want.
 
 ### AlexNet and CaffeNet
 
+![Alexnet-layers](figure/AlexNet.png)
 
+Alexnet [[3](#Alex12)] is convolutional neural network which wins the ILSVRC-2012 competition.
+The upper figure shows the architecture of CNN.
+It consists of five convolutional layers, two local response normalization layers, three max pooling layers and three fully connected layers.
 
-### ImageNet
+In the paper, alexNet used dataset from ILSVRC-2010, ILSVRC-2012.
+They could reduce the top-1 and top-5 error rates substantially compared to sparse coding or SIFT + FVs.
 
+CaffeNet is similar to the AlexNet with some differences.
+One is that CaffeNet does not use relighting data-augmentation for training.
+The other change is the order of layers.
+In AlexNet, the pooling layers come after the normalization layers.
+But in CaffeNet, the pooling layers come before the normalization layers.
+
+### ImageNet and ILSVRC
+
+[ImageNet](http://image-net.org/) is  an image dataset that generally used for image training and inference.
+It provides more than 15M labeled high resolution images with about 22K categories including different kinds of animals,  vehicels, objects, etc.
+
+ILSVRC (ImageNet Large Scale Visual Recognition Competition) is an annual competition of image classification using ImageNet dataset.
+ILSVRC contains 1.2M images in 1K categories.
+In this project, we used subset of ILSVRC data.
 
 
 Fine-tuning CaffeNet
 ------------
-For target data, we decided to use ILSVRC2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of image counts in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image.
+For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of image counts in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image.
 
 |         | apple   | artichoke | bagel   | banana  | bell pepper | burrito | cucumber  | fig     | guacamole |
 |:-------:|:-------:|:---------:|:-------:|:-------:|:-----------:|:-------:|:---------:|:-------:|:--------:|
@@ -93,7 +112,7 @@ In deployment, we compare ground truth to the inference result with a highest co
 <div class="fig figcenter fighighlight">
   <img src="result/result_top1.png">
   <div class="figcaption">
-    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC14 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keep Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
 
@@ -103,12 +122,12 @@ Interestingly, Grocery-CaffeNet does not identify some classes which share simil
 
 Summary
 ------------
-[PSU CSE586 Course Project2] Fine-tuning AlexNet from Selected ILSVRC14 Dataset
+[PSU CSE586 Course Project2] Fine-tuning AlexNet from Selected ILSVRC-2014 Dataset
 
 
 ------------
 <a name='fn1'> </a>
-[1.](#rfn1) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC12 dataset.
+[1.](#rfn1) The top-1 accuracy of the original CaffeNet is 57.4% against ILSVRC-2012 dataset.
 
 <a name='fn2'> </a>
 [2.](#rfn2) For instance, red apple versus pomegranate, bagel with vegitable versus hamburger, and water bottle versus wine bottle have visually similar features.
@@ -125,7 +144,7 @@ References
 [3] [Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton, "ImageNet Classification with Deep Convolutional Neural Networks", NIPS, 2012.](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks "AlexNet")
 
 <a name='ilsvrc14'> </a>
-[4] [Imagenet Large Scale Visual Recognition Challenge 2014 (ILSVRC2014) Dataset](http://image-net.org/challenges/LSVRC/2014/index#data)
+[4] [Imagenet Large Scale Visual Recognition Challenge 2014 (ILSVRC-2014) Dataset](http://image-net.org/challenges/LSVRC/2014/index#data)
 
 <a name='Szeg14'> </a>
 [5] [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich, "Going Deeper with Convolutions", arXiv preprint arXiv:1409.4842, 2014.](https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet)
