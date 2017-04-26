@@ -34,7 +34,7 @@ Caffe support CPU (C++) and GPU (CUDA), thus user can choose what they want.
 
 ### AlexNet and CaffeNet
 
-![Alexnet-layers](figure/AlexNet.png)
+![Layers-of-AlexNet](result/AlexNet.png)
 
 Alexnet [[3](#Alex12)] is convolutional neural network which wins the ILSVRC-2012 competition.
 The upper figure shows the architecture of CNN.
