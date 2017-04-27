@@ -27,9 +27,9 @@ Caffe is a framework for deep learning which is developed by Berkeley AI Researc
 Since Caffe supports both CPU and GPU(NVIDIA/AMD/INTEL) based on C++/CUDA/OpenCL, and provides wrapper APIs for python and matlab, users can easily run Caffe on their machines by adjusting confiuration.
 
 It has numerous implementation of general layers used in CNNs; like convolution, response normalization, maximum/average pooling, rectified linear activation (relu), sigmoid activation, etc.
-Using the layers, user can train their own model from scratch.
+Using the layers, our own model can be trained from scratch.
 In the meantime, Caffe provides several CNN references such as AlexNet, GoogleNet, and CaffeNet. Therefore, practitioners can benefit from the pre-trained networks to generate byproduct without wasting huge amount of time for duplication.
-In this project, we choosed CaffeNet.
+In this project, we choose CaffeNet.
 
 ### AlexNet and CaffeNet
 
@@ -59,7 +59,7 @@ In this project, we used subset of ILSVRC detection data.
 
 Fine-tuning CaffeNet
 ------------
-For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of images in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. Since there are [file size limits](https://help.github.com/articles/what-is-my-disk-quota/) in Github, we do not provide the entire images. Instead, you can recreate them by refering to a full list of \[[train](data/train.txt) | [val](data/val.txt)\] dataset. For the sake of simplicity, we adapted centered 255x255 downscaling to each image. In training, Caffe randomly choose 227x227 RGB input from 255x255 image data to consider manifold variations in object distribution. There is no data augmentation except annotation arrangement.
+For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of images in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. Since there are [file size limits](https://help.github.com/articles/what-is-my-disk-quota/) in Github, we do not provide the entire images. Instead, you can recreate them by refering to a full list of \[[train](data/train.txt) | [val](data/val.txt)\] dataset. For the sake of simplicity, we adapted centered 255x255 downscaling to each image. In training, Caffe randomly selects 227x227 RGB input from 255x255 image data to consider manifold variations in object distribution for CaffeNet. There is no data augmentation except annotation arrangement.
 
 |         | apple   | artichoke | bagel   | banana  | bell pepper | burrito | cucumber  | fig     | guacamole |
 |:-------:|:-------:|:---------:|:-------:|:-------:|:-----------:|:-------:|:---------:|:-------:|:--------:|
@@ -118,7 +118,7 @@ Interestingly, Grocery-CaffeNet does not identify some classes which share simil
 
 Summary
 ------------
-We presented fine-tuning CaffeNet model, where it is possible to transfer a capability of the pre-trained model's feature extraion to another model, Grocery-CaffeNet. As described in this case study, dataset collection is very important to take advantage of training CNNs, which can start to converge within just a few GPU epochs. Due to a lot of hidden parameters, however, a CNN model is easily affected by similarities and differences of input data. Even though it can be dealt with more deeper CNNs, there is still a need to consider appropriate matching between dataset with well-defined annotations and a CNN model's capability. That is, unless our goal is to build the most accurate CNN model, we should focus on exploiting well-known CNN model's capability with our own data generation.
+We presented fine-tuning CaffeNet model, where it is possible to transfer a capability of the pre-trained model's feature extraction to another model, Grocery-CaffeNet. As described in this case study, dataset collection is very important to take advantage of training CNNs, which can start to converge within just a few GPU epochs. Due to a lot of hidden parameters, however, a CNN model is easily affected by similarities and differences of input data. Even though it can be dealt with more deeper CNNs, there is still a need to consider appropriate matching between dataset with well-defined annotations and a CNN model's capability. That is, unless our goal is to build the most accurate CNN model, we should focus on exploiting well-known CNN model's capability with our own data generation.
 
 ------------
 <a name='fn1'> </a>
