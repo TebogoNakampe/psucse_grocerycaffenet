@@ -87,10 +87,10 @@ As shown in the following CNN scheme, we directly borrowed layers of CaffeNet ex
 
 Since there are 13,649 images in our training dataset, an epoch is roughly 110 iterations in terms of batch size 125. We repeated testing validation dataset for every 110 iterations to understand a trend of top-1 classification accuracy while training continues. Testing itself takes 28 iterations with batch size 62.
 
-<div class="text-center border-top border-bottom border-gray-light p-3">
-  <img src="result/train_loss.png" width="48%">
-  <img src="result/test_accuracy.png" width="48%" class="border-left border-gray-dark">
-  <div class="text-gray">
+<div style="text-align: center;padding: 20px 4px 20px 4px;border-bottom: 1px solid #999;border-top: 1px solid #999;">
+  <img src="result/train_loss.png" width="48%" style="max-width: 98%;">
+  <img src="result/test_accuracy.png" width="48%" style="max-width: 98%;border-left: 1px solid black;">
+  <div style="font-weight: 400;font-size: 14px;color: #575651;text-align: justify;">
     While training Grocery-CaffeNet, we decrease learning rate by one-tenth for every 10K iterations, i.e. rougly 90 GPU epochs. There is no significant difference in both train loss (<b>left</b>) and test accuracy (<b>right</b>) after 30K iterations. Therefore, 30K iterations would be sufficient enough to fine-tune this CNN model.
   </div>  
 </div>
@@ -105,9 +105,9 @@ Let's analyze the top-1 classification accuracy in more detail. To understand wh
 
 In deployment, we compare ground truth to the inference result with a highest confidence score so that can figure out which features Grocery-CaffeNet really learns. The only difference in our CNN scheme is data layer to feed an image at a time (batch size 1).
 
-<div class="text-center border-top border-bottom border-gray-light p-3">
-  <img src="result/result_top1.png">
-  <div class="text-gray">
+<div style="text-align: center;padding: 20px 4px 20px 4px;border-bottom: 1px solid #999;border-top: 1px solid #999;">
+  <img src="result/result_top1.png" style="max-width: 98%;">
+  <div style="font-weight: 400;font-size: 14px;color: #575651;text-align: justify;">
     Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keeps Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
@@ -127,14 +127,14 @@ Summary
 <a name='fn2'> </a>
 [2.](#rfn2) For instance, red apple versus pomegranate, bagel versus pretzel, and water bottle versus wine bottle have visually similar features. Here are some examples which you can compare:
 
-<div class="text-center border-top border-bottom border-gray-light p-3">
-  <img src="data/ILSVRC2014_train_00031188.JPEG">
-  <img src="data/ILSVRC2014_train_00034821.JPEG">
-  <img src="data/ILSVRC2014_train_00052736.JPEG">
-  <img src="data/n07695742_7997.JPEG">
-  <img src="data/ILSVRC2014_train_00005172.JPEG">
-  <img src="data/ILSVRC2014_train_00005152.JPEG">
-  <div class="text-gray">
+<div style="text-align: center;padding: 20px 4px 20px 4px;border-bottom: 1px solid #999;border-top: 1px solid #999;">
+  <img src="data/ILSVRC2014_train_00031188.JPEG" style="max-width: 98%;">
+  <img src="data/ILSVRC2014_train_00034821.JPEG" style="max-width: 98%;">
+  <img src="data/ILSVRC2014_train_00052736.JPEG" style="max-width: 98%;">
+  <img src="data/n07695742_7997.JPEG" style="max-width: 98%;">
+  <img src="data/ILSVRC2014_train_00005172.JPEG" style="max-width: 98%;">
+  <img src="data/ILSVRC2014_train_00005152.JPEG" style="max-width: 98%;">
+  <div style="font-weight: 400;font-size: 14px;color: #575651;text-align: justify;">
     The order of ground truth among six images ranging from top-left to bottom-right is apple, pomegranate, bagel, pretzel, water bottle, and wine bottle.
   </div>
 </div>
