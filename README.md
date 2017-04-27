@@ -1,4 +1,4 @@
-PennState 2017SP CSE586 Project2: Fine-tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
+PennState 2017SP CSE586 Project2: Fine-Tuning CNN <br/> - Jinhang Choi, Jihyun Ryoo
 ============
 
 This webpage is a comprehensive report of the second project in CSE586 class.
@@ -7,7 +7,7 @@ Table of contents :
 
   * Introduction
   * Background
-  * Fine-tuning CaffeNet
+  * Fine-Tuning CaffeNet
   * Result
   * Summary
 
@@ -24,9 +24,9 @@ Background
 
 Caffe is a framework for deep learning which is developed by Berkeley AI Research (BAIR).
 
-Since Caffe supports both CPU and GPU(NVIDIA/AMD/INTEL) based on C++/CUDA/OpenCL, and provides wrapper APIs for python and matlab, users can easily run Caffe on their machines by adjusting confiuration.
+Since Caffe supports both CPU and GPU (NVIDIA/AMD/INTEL) based on C++/CUDA/OpenCL, and provides wrapper APIs for python and matlab, users can easily run Caffe on their machines by adjusting confiuration.
 
-It has numerous implementation of general layers used in CNNs; like convolution, response normalization, maximum/average pooling, rectified linear activation (relu), sigmoid activation, etc.
+It has numerous implementation of general layers used in CNNs; like convolution, response normalization, maximum/average pooling, rectified linear activation (ReLU), sigmoid activation, etc.
 Using the layers, our own model can be trained from scratch.
 In the meantime, Caffe provides several CNN references such as AlexNet, GoogleNet, and CaffeNet. Therefore, practitioners can benefit from the pre-trained networks to generate byproduct without wasting huge amount of time for duplication.
 In this project, we choose CaffeNet.
@@ -54,32 +54,32 @@ But in CaffeNet, the pooling layers come before the normalization layers.
 It provides more than 15M labeled high resolution images with about 22K categories including different kinds of animals, vehicels, objects, etc.
 
 ILSVRC (ImageNet Large Scale Visual Recognition Competition) is an annual competition of image classification and detection tasks using ImageNet dataset.
-ILSVRC classification dataset contains more than 1.2M images in 1K categories, and ILSVRC detection dataset contains more than 450K images in 200 categories.
-In this project, we used subset of ILSVRC detection data.
+ILSVRC classification (CLS-LOC) dataset contains more than 1.2M images in 1K categories, and ILSVRC detection (DET) dataset contains more than 450K images in 200 categories.
+In this project, we used subset of ILSVRC DET data.
 
-Fine-tuning CaffeNet
+Fine-Tuning CaffeNet
 ------------
 For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of images in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. Since there are [file size limits](https://help.github.com/articles/what-is-my-disk-quota/) in Github, we do not provide the entire images. Instead, you can recreate them by refering to a full list of \[[train](data/train.txt) | [val](data/val.txt)\] dataset. For the sake of simplicity, we adapted centered 255x255 downscaling to each image. In training, Caffe randomly selects 227x227 RGB input from 255x255 image data to consider manifold variations in object distribution for CaffeNet. There is no data augmentation except annotation arrangement.
 
-|         | apple   | artichoke | bagel   | banana  | bell pepper | burrito | cucumber  | fig     | guacamole |
+|         | Apple   | Artichoke | Bagel   | Banana  | Bell pepper | Burrito | Cucumber  | Fig     | Guacamole |
 |:-------:|:-------:|:---------:|:-------:|:-------:|:-----------:|:-------:|:---------:|:-------:|:--------:|
-| train   | 1081    | 809       | 586     | 733     | 633         | 560     | 492       | 475     | 651       |
-| val     | 140     | 95        | 87      | 88      | 68          | 84      | 77        | 53      | 90        |
-| total   | 1221    | 904       | 673     | 821     | 701         | 644     | 569       | 528     | 741       |
+| Train   | 1081    | 809       | 586     | 733     | 633         | 560     | 492       | 475     | 651       |
+| Val     | 140     | 95        | 87      | 88      | 68          | 84      | 77        | 53      | 90        |
+| Total   | 1221    | 904       | 673     | 821     | 701         | 644     | 569       | 528     | 741       |
 
-|         | hamburger | lemon   | milk can  | mushroom | pineapple | pizza   | pomegranate | popsicle | pretzel |
+|         | Hamburger | Lemon   | Milk can  | Mushroom | Pineapple | Pizza   | Pomegranate | Popsicle | Pretzel |
 |:-------:|:---------:|:-------:|:-------:|:--------:|:---------:|:-------:|:-----------:|:--------:|:------:|
-| train   | 555       | 662     | 501       | 671      | 530       | 730     | 822         | 592      | 571     |
-| val     | 72        | 86      | 73        | 75       | 64        | 104     | 79          | 87       | 66      |
-| total   | 627       | 748     | 574       | 746      | 594       | 834     | 901         | 679      | 637     |
+| Train   | 555       | 662     | 501       | 671      | 530       | 730     | 822         | 592      | 571     |
+| Val     | 72        | 86      | 73        | 75       | 64        | 104     | 79          | 87       | 66      |
+| Total   | 627       | 748     | 574       | 746      | 594       | 834     | 901         | 679      | 637     |
 
-|         | strawberry | water bottle | wine bottle | summary |
+|         | Strawberry | Water bottle | Wine bottle | Summary |
 |:-------:|:----------:|:------------:|:-----------:|:-------:|
-| train   | 576        | 686          | 733         | 13649   |
-| val     | 83         | 87           | 73          | 1731    |
-| total   | 659        | 773          | 806         | 15380   |
+| Train   | 576        | 686          | 733         | 13649   |
+| Val     | 83         | 87           | 73          | 1731    |
+| Total   | 659        | 773          | 806         | 15380   |
 
-As shown in the following CNN scheme, we directly borrowed layers of CaffeNet except softmax, which is composed of 21 classes. Even though reusing weights and biases in CaffeNet, however, we still need to refine the trained parameters for extracting features in some way. As a result, we did not eliminate learning rate of every layers, but fortify training the last fully connected layer [ten times](model/mdl_grocery_caffenet/train_val.prototxt#L364-L371) than other layers. Instead, the initial learning rate decreases to [0.001](model/mdl_grocery_caffenet/solver.prototxt#L4) so that Grocery-CaffeNet can rely on the original CaffeNet's parameters. 
+As shown in the following CNN scheme, we directly borrowed layers of CaffeNet except softmax, which is composed of 21 classes. Even though reusing weights and biases in CaffeNet, however, we still need to refine the trained parameters for extracting features in some way. As a result, we did not eliminate learning rate of every layers, but fortify training the last fully connected layer [10x](model/mdl_grocery_caffenet/train_val.prototxt#L364-L371) than other layers. Instead, the initial learning rate decreases to [0.001](model/mdl_grocery_caffenet/solver.prototxt#L4) so that Grocery-CaffeNet can rely on the original CaffeNet's parameters. 
 
 ![train-grocery-caffenet](result/train.png)
 
