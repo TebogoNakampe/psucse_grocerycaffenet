@@ -15,7 +15,7 @@ Introduction
 ------------
 
 In this project, we employ Caffe [[1](#Jia14)] as a framework for convolutional neural network (CNN).
-Also, as a case study of fine-tuing CNN, we bootstrap CaffeNet [[2](#BAIRCaffeNet)], which is a replication of AlexNet [[3](#Alex12)]. We call the fine-tuned model GroceryCaffeNet because it exploits CaffeNet's capability to identify some grocery items. Training GroceryCaffeNet is based on [ImageNet](http://image-net.org/) Dataset.
+Also, as a case study of fine-tuing CNN, we bootstrap CaffeNet [[2](#BAIRCaffeNet)], which is a replication of AlexNet [[3](#Alex12)]. We call the fine-tuned model Grocery-CaffeNet because it exploits CaffeNet's capability to identify some grocery items. Training Grocery-CaffeNet is based on [ImageNet](http://image-net.org/) Dataset.
 
 Background
 ------------
@@ -61,7 +61,7 @@ In this project, we used subset of ILSVRC data.
 
 Fine-tuning CaffeNet
 ------------
-For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of image counts in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image.
+For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] since it does not overlap ILSVRC-2012 Dataset used in CaffeNet. To be specific, we choose 21 of 200 DET classes, which might represent some items in a grocery store. The following table describes a breakdown of images in our dataset. Due to annotation issue, all 15,380 images come from DET training dataset, where training/validation dataset are randomly separated in 9:1 manner. For the sake of simplicity, we adapted centered 255x255 downscaling to each image. Since there are [file size limits](https://help.github.com/articles/what-is-my-disk-quota/) in Github, we do not provide the entire images. Instead, you can recreate them by refering to a full list of \[[train](data/train.txt) | [val](data/val.txt)\] dataset.
 
 |         | apple   | artichoke | bagel   | banana  | bell pepper | burrito | cucumber  | fig     | guacamole |
 |:-------:|:-------:|:---------:|:-------:|:-------:|:-----------:|:-------:|:---------:|:-------:|:--------:|
@@ -81,7 +81,7 @@ For target data, we decided to use ILSVRC-2014 DET Dataset [[4](#ilsvrc14)] sinc
 | val     | 83         | 87           | 73          | 1731    |
 | total   | 659        | 773          | 806         | 15380   |
 
-As shown in the following CNN scheme, we directly borrowed layers of CaffeNet except softmax, which is composed of 21 classes. Even though reusing weights and biases in CaffeNet, however, we still need to refine the trained parameters for extracting features in some way. As a result, we did not eliminate learning rate of every layers, but fortify training the last fully connected layer [ten times](model/mdl_grocery_caffenet/train_val.prototxt#L364-L371) than other layers. Instead, the initial learning rate decreases to [0.001](model/mdl_grocery_caffenet/solver.prototxt#L4) so that GroceryCaffeNet can rely on the original CaffeNet's parameters. 
+As shown in the following CNN scheme, we directly borrowed layers of CaffeNet except softmax, which is composed of 21 classes. Even though reusing weights and biases in CaffeNet, however, we still need to refine the trained parameters for extracting features in some way. As a result, we did not eliminate learning rate of every layers, but fortify training the last fully connected layer [ten times](model/mdl_grocery_caffenet/train_val.prototxt#L364-L371) than other layers. Instead, the initial learning rate decreases to [0.001](model/mdl_grocery_caffenet/solver.prototxt#L4) so that Grocery-CaffeNet can rely on the original CaffeNet's parameters. 
 
 ![train-grocery-caffenet](result/train.png)
 
@@ -95,11 +95,15 @@ Since there are 13,649 images in our training dataset, an epoch is roughly 110 i
   </div>  
 </div>
 
-A trend of classification accuracy in testing validation dataset indicates that GroceryCaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<sup id='rfn1'>[1](#fn1)</sup>.
+A trend of classification accuracy in testing validation dataset indicates that Grocery-CaffeNet introduces fast convergence even with just an epoch due to derivation of parameters from CaffeNet. In the meantime, we can ensure potential of over-fitting issue by monitoring a trend of trian loss penalty. From our experiments, 45,000 iterations are probed to test the extent of available classification in the current setting. Our model may identify 21 grocery item classes in 76.2% accuracy<sup id='rfn1'>[1](#fn1)</sup>.
+
+| name                   | caffemodel                                                                                               | license      | sha1                                     |
+|:----------------------:|:--------------------------------------------------------------------------------------------------------:|:------------:|:----------------------------------------:|
+| Grocery-CaffeNet model | [caffenet\_train\_iter\_45000.caffemodel](https://drive.google.com/open?id=0B0lt6MbaK2RCZWd0ZklTMmVGbjg) | unrestricted | e43cb843634aae054a2a5bbb813967e0c63b5048 |
 
 Result
 ------------
-Let's analyze the top-1 classification accuracy in more detail. To understand what happend to test validation dataset, we deploy GroceryCaffeNet on [classification script](script/classify.py) per image. For your information, please refer to the following [log](result/classification.log).
+Let's analyze the top-1 classification accuracy in more detail. To understand what happend to test validation dataset, we deploy Grocery-CaffeNet on [classification script](script/classify.py) per image. For your information, please refer to the following [log](result/classification.log).
 
 ![deploy-grocery-caffenet](result/deploy.png)
 
@@ -108,10 +112,9 @@ In deployment, we compare ground truth to the inference result with a highest co
 <div style="text-align: center;padding: 20px 4px 20px 4px;border-bottom: 1px solid #999;border-top: 1px solid #999;">
   <img src="result/result_top1.png" style="max-width: 98%;">
   <div style="font-weight: 400;font-size: 14px;color: #575651;text-align: justify;">
-    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training GroceryCaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keeps Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
+    Since a few of validation images are redundantly tested due to batch size, actual top-1 classification accuracy is slightly lower than the validation trends in training Grocery-CaffeNet. Additionally, this test is based on center-cropped 227x227 images. Since ILSVRC-2014 DET dataset does not locate its detection objects at the center of an image, classification accuracy can be deteriorated. For instance, object occlusion in an image keeps Grocery-CaffeNet from identifying its class preciesly. Nevertheless, mean average precision is near to 70%.
   </div>
 </div>
-
 
 Interestingly, Grocery-CaffeNet does not identify some classes which share similar features with other classes such as shape and color<sup id='rfn2'>[2](#fn2)</sup>. If we fine-tune more deeper network such as GoogLeNet [[5](#Szeg14)] or ResNet [[6](#Kaiming15)], it would recognize the detailed characteristics with respect to each object class.
 
